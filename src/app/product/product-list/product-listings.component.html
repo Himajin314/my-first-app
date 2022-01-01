@@ -3,14 +3,16 @@
 </div>
 <div class="container">
     <div class="row">
-      <div *ngFor="let product of products" class="col">
-        <a [routerLink]="['detail']">
+      <div *ngFor="let product of products; let productId = index" class="col">
+        <a [routerLink]="[ productId ]">
           <div class="card">
             <img src="./assets/img/placeholder.png" class="card-img-top" alt="...">
               <div class="card-body">
-                <p class="card-text">{{ product.name }}</p>
-                <p class="card-text">攻撃力{{ product.attack }}</p>
-                <p class="card-text">体力{{ product.hp }}</p>
+                <div class="card-text">
+                  <p>{{ product.name }}</p>
+                  <p>攻撃力{{ product.attack }}</p>
+                  <p>体力{{ product.hp }}</p>
+                </div>
               </div>
           </div>
         </a>
