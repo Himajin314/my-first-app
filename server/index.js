@@ -3,23 +3,24 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const config = require('./config/dev');
-const FakeDB = require('./model/fake-db');
+const FakeDb = require("./model/fake-db")
+const SampleDb = require("./sample-db")
 
-async () => {
-    await mongoose.connect(config.DB_URL, {
+const productRoutes = require('./routes/products')
+
+mongoose.connect(config.DB_URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-    }).then(
-        () => {
-            const FakeDB = new FakeDB()
-            FakeDB.seeDB()
-        }
-    )
-}
+    useUnifiedTopology: true
+}).then(
+    () => {
+        const sampleDb = new SampleDb()
+        sampleDb.initDb()
+    }
+)
 
 const app = express()
+
+app.use('/api/v1/products', productRoutes)
 
 app.get('/products', function(req, res){
     res.json({'success': true});

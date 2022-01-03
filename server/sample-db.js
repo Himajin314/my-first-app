@@ -1,6 +1,6 @@
-const Product = require('./product')
+const Product = require('./model/product')
 
-class FakeDb {
+class SampleDb {
 
     constructor() {
         this.products = [
@@ -43,6 +43,15 @@ class FakeDb {
         ]
     }
 
+    async initDb(){
+        await this.cleanDb()
+        this.pushProductsToDb()
+    }
+
+    async cleanDb() {
+        await Product.deleteMany({})
+    }
+
     pushProductsToDb() {
         this.products.forEach(
             (product) => {
@@ -57,4 +66,4 @@ class FakeDb {
     }
 }
 
-module.exports = FakeDb
+module.exports = SampleDb
